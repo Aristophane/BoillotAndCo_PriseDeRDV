@@ -3,34 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="index.css">
     <title>Boillot&Co Planifiez votre RDV</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f0f0f0;
-        margin: 0;
-        padding: 20px;
-      }
-      h1 {
-        color: #333;
-      }
-      button {
-        background-color: #4caf50;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 10px 0;
-        cursor: pointer;
-      }
-      p {
-        font-size: 14px;
-        color: #666;
-      }
-    </style>
   </head>
   <body>
     <h1>Prendez RDV</h1>
@@ -58,25 +32,6 @@
     <br /><br />
     <button id="fetchJobs-btn">Fetch Jobs</button>
     <p id="result"></p>
-
-    <script>
-      function replacePlusWithEncodedPlus(inputString) {
-        return inputString.replace(/\+/g, "%2B");
-      }
-
-      const fetchJobsBtn = document.getElementById("fetchJobs-btn");
-      const responseText = document.getElementById("result");
-      const inputPhoneTxt = document.getElementById("clientPhone");
-      const inputPostCodeTxt = document.getElementById("postcode");
-
-      fetchJobsBtn.addEventListener("click", async () => {
-        let inputPhone = replacePlusWithEncodedPlus(inputPhoneTxt.value);
-        let inputPostCode = inputPostCodeTxt.value;
-        const response = await fetch(
-          `/.netlify/functions/get-list-of-jobs-from-phone-and-postcode?phone=${inputPhone}&postCode=${inputPostCode}`
-        ).then((response) => response.json());
-        responseText.innerText = JSON.stringify(response);
-      });
-    </script>
   </body>
+  <script src="script.js"></script>
 </html>
