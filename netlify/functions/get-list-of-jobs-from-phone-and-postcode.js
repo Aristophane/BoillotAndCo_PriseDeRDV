@@ -1,5 +1,7 @@
-const BIGCHANGE_BASE_API =
-  "https://webservice.bigchangeapps.com/v01/services.ashx?key=55a4a569-e7f5";
+const apiKey = process.env.BIG_CHANGE_API_KEY;
+const apiAuth = process.env.BIG_CHANGE_API_BASIC_AUTH;
+const authInfo = `Basic ${apiAuth}`;
+const BIGCHANGE_BASE_API = `https://webservice.bigchangeapps.com/v01/services.ashx?key=${apiKey}`;
 
 export const handler = async (event, context) => {
   const params = event.queryStringParameters;
@@ -28,16 +30,12 @@ const getContactIdFromPhoneAndPostCode = async (phone, postCode) => {
 
   const apiUrlForContactsByPhone = `${BIGCHANGE_BASE_API}${CONTACTS_BY_PHONE_METHOD}&phonenumber=${phone}`;
 
-  console.log("phone " + phone);
   const responseForContact = await fetch(apiUrlForContactsByPhone, {
     method: "GET",
     headers: {
-      Authorization:
-        "Basic cGllcnJlbG91aXNib2lsbG90QGJuZGMuY29tOlRlc3QxMjMwOTgqIQ==",
+      Authorization: authInfo,
     },
   }).then((response) => response.json());
-
-  console.log(responseForContact);
 
   const data = responseForContact?.Result.filter(
     (contact) => contact.ContactPostCode === postCode
@@ -55,8 +53,7 @@ const getJobListFromContactId = async (clientId) => {
   const responseForJobs = await fetch(apiUrlForJobList, {
     method: "GET",
     headers: {
-      Authorization:
-        "Basic cGllcnJlbG91aXNib2lsbG90QGJuZGMuY29tOlRlc3QxMjMwOTgqIQ==",
+      Authorization: authInfo,
     },
   }).then((responseForJobs) => responseForJobs.json());
 
