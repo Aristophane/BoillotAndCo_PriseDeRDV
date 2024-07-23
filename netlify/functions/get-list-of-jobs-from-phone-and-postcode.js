@@ -10,22 +10,12 @@ export const handler = async (event, context) => {
     formattedPhoneNumber,
     postCode
   );
-  const JOBLIST_METHOD =
-    "&action=JobsListByContactPaged&V2=1&page=0&pageSize=500";
-  const apiUrlForJobList = `${BIGCHANGE_BASE_API}${JOBLIST_METHOD}&contactId=${clientId}`;
-  const responseForJobs = await fetch(apiUrlForJobList, {
-    method: "GET",
-    headers: {
-      Authorization:
-        "Basic cGllcnJlbG91aXNib2lsbG90QGJuZGMuY29tOlRlc3QxMjMwOTgqIQ==",
-    },
-  }).then((responseForJobs) => responseForJobs.json());
 
-  console.log(apiUrlForJobList);
+  const responseForJobs = await getJobListFromContactId(clientId);
 
   return {
     statusCode: 200,
-    body: JSON.stringify({responseForJobs}),
+    body: JSON.stringify({ responseForJobs }),
   };
 };
 
@@ -53,7 +43,22 @@ const getContactIdFromPhoneAndPostCode = async (phone, postCode) => {
     (contact) => contact.ContactPostCode === postCode
   );
 
-  //TODO ajouter la gestiondu fait qu'avoir plusieurs résultats doit stopper le processus
+  //TODO ajouter la gestion du fait qu'avoir plusieurs résultats doit stopper le processus
 
   return data[0].ContactId;
+};
+
+const getJobListFromContactId = async (clientId) => {
+  const JOBLIST_METHOD =
+    "&action=JobsListByContactPaged&V2=1&page=0&pageSize=500";
+  const apiUrlForJobList = `${BIGCHANGE_BASE_API}${JOBLIST_METHOD}&contactId=${clientId}`;
+  const responseForJobs = await fetch(apiUrlForJobList, {
+    method: "GET",
+    headers: {
+      Authorization:
+        "Basic cGllcnJlbG91aXNib2lsbG90QGJuZGMuY29tOlRlc3QxMjMwOTgqIQ==",
+    },
+  }).then((responseForJobs) => responseForJobs.json());
+
+  return responseForJobs;
 };

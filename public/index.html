@@ -70,8 +70,8 @@
       const inputPostCodeTxt = document.getElementById("postcode");
 
       fetchJobsBtn.addEventListener("click", async () => {
-        inputPhone = replacePlusWithEncodedPlus(inputPhoneTxt.value);
-        inputPostCode = inputPostCodeTxt.value;
+        let inputPhone = replacePlusWithEncodedPlus(inputPhoneTxt.value);
+        let inputPostCode = inputPostCodeTxt.value;
         const response = await fetch(
           `/.netlify/functions/get-list-of-jobs-from-phone-and-postcode?phone=${inputPhone}&postCode=${inputPostCode}`
         ).then((response) => response.json());
