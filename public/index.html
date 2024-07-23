@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sample Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        color: #333;
+      }
+      button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 10px 0;
+        cursor: pointer;
+      }
+      p {
+        font-size: 14px;
+        color: #666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Welcome to the Sample Page</h1>
+    <button id="fetch-btn">Fetch Data</button>
+    <button id="fetchJobs-btn">Fetch Jobs</button>
+    <p id="result"></p>
+
+    <script>
+      const fetchBtn = document.getElementById("fetch-btn");
+      const fetchJobsBtn = document.getElementById("fetchJobs-btn");
+      const responseText = document.getElementById("result");
+      fetchBtn.addEventListener("click", async () => {
+        const response = await fetch("/.netlify/functions/hello-world").then(
+          (response) => response.json()
+        );
+        responseText.innerText = JSON.stringify(response);
+      });
+      fetchJobsBtn.addEventListener("click", async () => {
+        const response = await fetch(
+          "/.netlify/functions/get-list-of-jobs-from-phone-and-postcode"
+        ).then((response) => response.json());
+        responseText.innerText = JSON.stringify(response);
+      });
+    </script>
+  </body>
+</html>
